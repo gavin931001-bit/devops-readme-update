@@ -1,32 +1,31 @@
 name: Update README
 
 on:
+  schedule:
+    - cron: "0 * * * *"   # 每小時跑一次
+  workflow_dispatch:       # 手動觸發
   push:
-    branches:
-      - main   # 當 main branch 有 push 時觸發
-  workflow_dispatch: # 允許手動觸發
-
-permissions:
-  contents: write   # 只給「修改內容」的權限
+    branches: [ main ]     # 當 main 有 push 時
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Update README
-        run: |
-          echo "🔄 Auto-updated at $(date)" >> README.md
+      - name: Update activity
+        uses: JamesIves/github-activity-readme@v0.3.0
+        with:
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+          MAX_LINES: 5
 
-      - name: Commit changes
+      - name: Commit & Push changes
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git commit -m "chore: update README"
+          git commit -m "chore: update README activity"
           git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
