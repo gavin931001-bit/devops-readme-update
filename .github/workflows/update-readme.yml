@@ -4,8 +4,7 @@ on:
   schedule:
     - cron: "0 * * * *"   # 每小時跑一次
   workflow_dispatch:       # 手動觸發
-  push:
-    branches: [ main ]     # 當 main 有 push 時
+
 
 jobs:
   update-readme:
