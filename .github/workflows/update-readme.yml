@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Update activity
-        uses: jamesgeorge007/github-activity-readme@master
+        uses: JamesIves/github-activity-readme@v0.3.0
         with:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
           MAX_LINES: 5
